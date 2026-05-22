@@ -1,731 +1,351 @@
-
-<h2 class="sr-only">Ujamaa Pamodzi Africa — Complete Quality Assurance Dashboard. Six sections: Overview, KPI Tracker, Mentorship Workplan, ETT Sessions Monitoring, QA Compliance, and Regional Performance across Northern, Central and Southern regions of Malawi.</h2>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-.db{font-family:var(--font-sans);font-size:13px;color:var(--color-text-primary)}
-.topbar{padding:12px 18px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.brand{display:flex;align-items:center;gap:10px}
-.brand-circle{width:34px;height:34px;border-radius:50%;background:#D85A30;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;flex-shrink:0}
-.brand-name{font-size:14px;font-weight:500}
-.brand-sub{font-size:11px;color:var(--color-text-secondary)}
-.qrow{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.qbtn{font-size:11px;padding:4px 10px;border:0.5px solid var(--color-border-secondary);border-radius:6px;background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
-.qbtn.on{background:#D85A30;color:#fff;border-color:#D85A30;font-weight:500}
-.navrow{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);overflow-x:auto;padding:0 16px}
-.ntab{font-size:12px;padding:9px 13px;border-bottom:2px solid transparent;color:var(--color-text-secondary);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px}
-.ntab.on{color:#D85A30;border-bottom-color:#D85A30;font-weight:500}
-.sec{display:none;padding:16px}
+:root{
+  --upa-orange:#D85A30;
+  --upa-orange-dark:#993C1D;
+  --upa-blue:#185FA5;
+  --upa-green:#1D9E75;
+  --upa-lime:#639922;
+  --upa-amber:#BA7517;
+  --upa-red:#E24B4A;
+  --ink:#172033;
+  --muted:#667085;
+  --line:#E5EAF1;
+  --panel:#FFFFFF;
+  --panel-soft:#F7F9FC;
+  --page:#F2F5F9;
+}
+.db{
+  font-family:Inter,"Plus Jakarta Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:13px;
+  color:var(--ink);
+  background:
+    linear-gradient(180deg,#F8FAFC 0%,#EEF3F8 100%);
+  min-height:100vh;
+  padding:18px;
+}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+.topbar{
+  padding:18px 20px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px 18px 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+  color:#fff;
+  background:linear-gradient(135deg,#111827 0%,#172033 56%,#24364F 100%);
+  box-shadow:0 20px 46px rgba(15,23,42,.18);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-circle{
+  width:42px;height:42px;border-radius:12px;
+  background:linear-gradient(135deg,var(--upa-orange),#F0997B);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:11px;font-weight:800;letter-spacing:.4px;
+  box-shadow:0 10px 24px rgba(216,90,48,.35);
+  flex-shrink:0;
+}
+.brand-name{font-size:16px;font-weight:800;letter-spacing:0}
+.brand-sub{font-size:11px;color:rgba(255,255,255,.66);margin-top:2px}
+
+.qrow{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:999px;
+  padding:5px;
+}
+.qbtn{
+  font-size:11px;
+  padding:6px 12px;
+  border:1px solid transparent;
+  border-radius:999px;
+  background:transparent;
+  color:rgba(255,255,255,.72);
+  cursor:pointer;
+  font-weight:700;
+}
+.qbtn:hover{background:rgba(255,255,255,.08);color:#fff}
+.qbtn.on{
+  background:#fff;
+  color:var(--upa-orange-dark);
+  border-color:#fff;
+  box-shadow:0 6px 16px rgba(0,0,0,.16);
+}
+
+.navrow{
+  display:flex;
+  border:1px solid var(--line);
+  border-top:none;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(10px);
+  overflow-x:auto;
+  padding:0 14px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 10px 28px rgba(15,23,42,.06);
+}
+.ntab{
+  font-size:12px;
+  padding:13px 14px;
+  border-bottom:3px solid transparent;
+  color:#667085;
+  cursor:pointer;
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-weight:700;
+}
+.ntab:hover{color:var(--ink);background:#F8FAFC}
+.ntab.on{color:var(--upa-orange);border-bottom-color:var(--upa-orange)}
+
+.sec{
+  display:none;
+  padding:20px;
+  border:1px solid var(--line);
+  border-top:none;
+  background:rgba(255,255,255,.62);
+  border-radius:0 0 18px 18px;
+}
 .sec.on{display:block}
-.stitle{font-size:14px;font-weight:500;margin-bottom:2px}
-.ssub{font-size:11px;color:var(--color-text-secondary);margin-bottom:14px}
-.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:16px}
-.mc{background:var(--color-background-secondary);border-radius:8px;padding:11px 13px}
-.mc-lbl{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
-.mc-val{font-size:21px;font-weight:500}
-.mc-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;overflow:hidden;margin-bottom:12px}
-.card-hd{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);display:flex;align-items:center;justify-content:space-between}
-.card-hd-t{font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px}
-.card-bd{padding:12px 14px}
-.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:2px 7px;border-radius:6px;font-weight:500}
-.bg{background:#EAF3DE;color:#3B6D11}.ba{background:#FAEEDA;color:#854F0B}.br{background:#FCEBEB;color:#A32D2D}.bb{background:#E6F1FB;color:#0C447C}.bo{background:#FAECE7;color:#712B13}.bp{background:#EEEDFE;color:#3C3489}.bt{background:#E1F5EE;color:#085041}
-.sdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:1px}
-.dg{background:#639922}.da{background:#BA7517}.dr{background:#E24B4A}.dt{background:#1D9E75}
-.prow{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.stitle{font-size:18px;font-weight:850;letter-spacing:-.01em;margin-bottom:4px;color:#111827}
+.ssub{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:18px}
+.mc{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:15px 16px;
+  box-shadow:0 10px 28px rgba(15,23,42,.06);
+  position:relative;
+  overflow:hidden;
+}
+.mc:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:var(--upa-orange);
+}
+.mc:nth-child(1):before{background:var(--upa-lime)}
+.mc:nth-child(3):before{background:var(--upa-amber)}
+.mc:nth-child(4):before{background:var(--upa-blue)}
+.mc:nth-child(6):before{background:var(--upa-green)}
+.mc-lbl{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:700}
+.mc-val{font-size:26px;font-weight:850;letter-spacing:-.03em;color:#111827}
+.mc-sub{font-size:10.5px;color:var(--muted);margin-top:5px}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:14px;
+  box-shadow:0 12px 34px rgba(15,23,42,.07);
+}
+.card-hd{
+  padding:13px 16px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#FFFFFF 0%,#F8FAFC 100%);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.card-hd-t{font-size:12.5px;font-weight:850;display:flex;align-items:center;gap:8px;color:#172033}
+.card-hd-t i{color:var(--upa-orange)}
+.card-bd{padding:16px}
+
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+
+.badge,.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10.5px;
+  padding:4px 9px;
+  border-radius:999px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.bg,.chip-g{background:#EAF7E7;color:#27620B}
+.ba,.chip-a{background:#FFF4DF;color:#854F0B}
+.br,.chip-r{background:#FDECEC;color:#A32D2D}
+.bb{background:#E8F2FC;color:#0C447C}
+.bo{background:#FFF0EA;color:#7A2F16}
+.bp{background:#F0EEFF;color:#3C3489}
+.bt{background:#E4F8F1;color:#085041}
+
+.sdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+.dg{background:var(--upa-lime)}.da{background:var(--upa-amber)}.dr{background:var(--upa-red)}.dt{background:var(--upa-green)}
+
+.prow,.action-item,.qa-row{
+  transition:background .15s ease;
+}
+.prow:hover,.action-item:hover,.qa-row:hover{background:#F8FAFC}
+.prow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
 .prow:last-child{border-bottom:none}
-.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
+.av{
+  width:32px;height:32px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:850;flex-shrink:0;
+}
 .at{background:#E1F5EE;color:#085041}.ao{background:#FAECE7;color:#712B13}.ab{background:#E6F1FB;color:#0C447C}.ap{background:#EEEDFE;color:#3C3489}.ag{background:#EAF3DE;color:#27500A}
 .pi{flex:1;min-width:0}
-.pn{font-size:12px;font-weight:500}
-.pr{font-size:10px;color:var(--color-text-secondary)}
-.mbar-w{flex:1;background:var(--color-background-secondary);border-radius:4px;height:5px;overflow:hidden}
-.mbar{height:100%;border-radius:4px}
-.bgreen{background:#639922}.bamber{background:#BA7517}.bred{background:#E24B4A}
-.mval{font-size:10px;font-weight:500;min-width:28px;text-align:right}
-.tbl{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
-.tbl th{font-size:10px;font-weight:500;color:var(--color-text-secondary);padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);text-align:left}
-.tbl td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle;word-break:break-word}
+.pn{font-size:12px;font-weight:800}
+.pr{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+.mbar-w{flex:1;background:#E8EDF4;border-radius:999px;height:7px;overflow:hidden}
+.mbar{height:100%;border-radius:999px}
+.bgreen{background:linear-gradient(90deg,#6CAB2D,var(--upa-green))}
+.bamber{background:linear-gradient(90deg,#D4932C,#BA7517)}
+.bred{background:linear-gradient(90deg,#F87171,var(--upa-red))}
+.mval{font-size:10.5px;font-weight:850;min-width:32px;text-align:right}
+
+.tbl{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:11.5px;
+  table-layout:fixed;
+}
+.tbl th{
+  font-size:10.5px;
+  font-weight:850;
+  color:#667085;
+  padding:10px 10px;
+  border-bottom:1px solid var(--line);
+  background:#F8FAFC;
+  text-align:left;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.tbl td{
+  padding:10px;
+  border-bottom:1px solid #EEF2F6;
+  vertical-align:middle;
+  word-break:break-word;
+}
 .tbl tr:last-child td{border-bottom:none}
-.ipt{font-size:11px;padding:3px 6px;border:0.5px solid var(--color-border-secondary);border-radius:5px;background:var(--color-background-primary);color:var(--color-text-primary);text-align:center;width:50px}
-.ipt-w{width:80px}
-.sel{font-size:11px;padding:3px 5px;border:0.5px solid var(--color-border-secondary);border-radius:5px;background:var(--color-background-primary);color:var(--color-text-primary)}
-.pill-row{display:flex;background:var(--color-background-secondary);border-radius:10px;padding:3px;gap:2px;margin-bottom:12px;width:fit-content}
-.pbtn{font-size:11px;padding:4px 11px;border-radius:8px;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer}
-.pbtn.on{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-tertiary)}
-.savebtn{font-size:11px;padding:5px 11px;background:#D85A30;color:#fff;border:none;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:4px}
-.savebtn:hover{background:#993C1D}
-.rhdr{font-size:11px;font-weight:500;color:var(--color-text-secondary);padding:5px 0 3px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:7px;display:flex;align-items:center;gap:5px}
-.cw{position:relative;width:100%}
-.action-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tbl tbody tr:hover td{background:#FBFCFE}
+
+.ipt,.sel{
+  font-size:11px;
+  padding:6px 8px;
+  border:1px solid #D8E0EA;
+  border-radius:8px;
+  background:#fff;
+  color:var(--ink);
+  outline:none;
+}
+.ipt:focus,.sel:focus{border-color:var(--upa-orange);box-shadow:0 0 0 3px rgba(216,90,48,.12)}
+.ipt{text-align:center;width:58px}
+.ipt-w{width:94px}
+
+.pill-row{
+  display:flex;
+  background:#E9EEF5;
+  border-radius:12px;
+  padding:4px;
+  gap:3px;
+  margin-bottom:16px;
+  width:fit-content;
+  max-width:100%;
+  overflow-x:auto;
+}
+.pbtn{
+  font-size:11.5px;
+  padding:7px 13px;
+  border-radius:9px;
+  border:none;
+  background:transparent;
+  color:#667085;
+  cursor:pointer;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+.pbtn.on{background:#fff;color:#111827;box-shadow:0 4px 12px rgba(15,23,42,.08)}
+
+.savebtn{
+  font-size:11.5px;
+  padding:8px 12px;
+  background:var(--upa-orange);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:850;
+  box-shadow:0 8px 18px rgba(216,90,48,.22);
+}
+.savebtn:hover{background:var(--upa-orange-dark)}
+
+.rhdr{
+  font-size:11px;
+  font-weight:800;
+  color:#667085;
+  padding:6px 0 8px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px;
+}
+.cw{
+  position:relative;
+  width:100%;
+  background:linear-gradient(180deg,#FFFFFF 0%,#FBFCFE 100%);
+  border:1px solid #EEF2F6;
+  border-radius:14px;
+  padding:8px;
+}
+.action-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
 .action-item:last-child{border-bottom:none}
-.ai-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
-.ai-red{background:#FCEBEB;color:#A32D2D}.ai-amb{background:#FAEEDA;color:#854F0B}.ai-grn{background:#EAF3DE;color:#3B6D11}
-.divider{height:0.5px;background:var(--color-border-tertiary);margin:12px 0}
-.leg{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
-.leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--color-text-secondary)}
-.leg-sq{width:9px;height:9px;border-radius:2px}
-.toast-wrap{position:absolute;bottom:14px;right:14px}
-.toast{background:#1D9E75;color:#fff;padding:8px 14px;border-radius:7px;font-size:12px;display:none;align-items:center;gap:6px}
-.qa-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.ai-icon{
+  width:34px;height:34px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:16px;
+}
+.ai-red{background:#FDECEC;color:#A32D2D}.ai-amb{background:#FFF4DF;color:#854F0B}.ai-grn{background:#EAF7E7;color:#3B6D11}
+.divider{height:1px;background:var(--line);margin:14px 0}
+
+.leg{display:flex;flex-wrap:wrap;gap:10px 14px;margin-bottom:10px}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#667085;font-weight:700}
+.leg-sq{width:10px;height:10px;border-radius:3px}
+
+.toast-wrap{position:fixed;bottom:18px;right:18px;z-index:100}
+.toast{
+  background:#111827;color:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:12px;
+  display:none;
+  align-items:center;
+  gap:7px;
+  box-shadow:0 18px 40px rgba(15,23,42,.28);
+}
+
+.qa-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
 .qa-row:last-child{border-bottom:none}
-.qa-left{flex:1;min-width:180px}
-.qa-name{font-size:12px;font-weight:500}
-.qa-ref{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
-.qa-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.chip{font-size:10px;padding:2px 8px;border-radius:10px;display:inline-flex;align-items:center;gap:3px;font-weight:500}
-.chip-g{background:#EAF3DE;color:#3B6D11}.chip-a{background:#FAEEDA;color:#854F0B}.chip-r{background:#FCEBEB;color:#A32D2D}
+.qa-left{flex:1;min-width:210px}
+.qa-name{font-size:12.5px;font-weight:850}
+.qa-ref{font-size:10.5px;color:var(--muted);margin-top:3px}
+.qa-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+
+@media (max-width:720px){
+  .db{padding:10px}
+  .topbar{border-radius:14px 14px 0 0;padding:16px}
+  .sec{padding:14px}
+  .card-bd{padding:13px}
+  .g2,.g3{grid-template-columns:1fr}
+  .mc-val{font-size:23px}
+  .qa-right{width:100%;justify-content:space-between}
+}
 </style>
-
-<div class="db">
-<div class="topbar">
-  <div class="brand">
-    <div class="brand-circle">UPA</div>
-    <div>
-      <div class="brand-name">Ujamaa Pamodzi Africa</div>
-      <div class="brand-sub">Consolidated Quality Assurance Management System · 2025</div>
-    </div>
-  </div>
-  <div class="qrow">
-    <span style="font-size:10px;color:var(--color-text-secondary)">Quarter:</span>
-    <button class="qbtn on" onclick="setQ(this,'Q1')">Q1</button>
-    <button class="qbtn" onclick="setQ(this,'Q2')">Q2</button>
-    <button class="qbtn" onclick="setQ(this,'Q3')">Q3</button>
-    <button class="qbtn" onclick="setQ(this,'Q4')">Q4</button>
-    <span id="qlabel" style="font-size:10px;color:var(--color-text-secondary);margin-left:4px">2025 · Q1</span>
-  </div>
-</div>
-
-<div class="navrow">
-  <div class="ntab on" onclick="nav('overview',this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Overview</div>
-  <div class="ntab" onclick="nav('kpi',this)"><i class="ti ti-target" aria-hidden="true"></i>KPI Tracker</div>
-  <div class="ntab" onclick="nav('mentor',this)"><i class="ti ti-school" aria-hidden="true"></i>Mentorship Plan</div>
-  <div class="ntab" onclick="nav('sessions',this)"><i class="ti ti-clipboard-check" aria-hidden="true"></i>ETT Sessions</div>
-  <div class="ntab" onclick="nav('qa',this)"><i class="ti ti-shield-check" aria-hidden="true"></i>QA Compliance</div>
-  <div class="ntab" onclick="nav('regional',this)"><i class="ti ti-map-pin" aria-hidden="true"></i>Regional View</div>
-</div>
-
-<!-- OVERVIEW -->
-<div id="s-overview" class="sec on">
-  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-    <div><div class="stitle">Programme performance overview</div><div class="ssub" style="margin-bottom:0">Hero In Me (boys) · Girls Empowerment Self-Defence (girls) · <span id="ov-qlabel">Q1 2025</span></div></div>
-    <span class="badge bo"><i class="ti ti-refresh" aria-hidden="true"></i>Live</span>
-  </div>
-  <div class="mgrid">
-    <div class="mc"><div class="mc-lbl">Overall QA score</div><div class="mc-val" style="color:#639922" id="ov-qa">82%</div><div class="mc-sub"><span class="sdot dg"></span>On track</div></div>
-    <div class="mc"><div class="mc-lbl">KPIs meeting target</div><div class="mc-val" id="ov-kpis">6/9</div><div class="mc-sub"><span class="sdot da"></span>3 need attention</div></div>
-    <div class="mc"><div class="mc-lbl">Sessions monitored</div><div class="mc-val" id="ov-sess">68%</div><div class="mc-sub"><span class="sdot da"></span>Target ≥70%</div></div>
-    <div class="mc"><div class="mc-lbl">Instructors assessed</div><div class="mc-val" id="ov-instr">91%</div><div class="mc-sub"><span class="sdot dg"></span>Target ≥95%</div></div>
-    <div class="mc"><div class="mc-lbl">Reports on time</div><div class="mc-val" style="color:#639922">100%</div><div class="mc-sub"><span class="sdot dg"></span>Target 100%</div></div>
-    <div class="mc"><div class="mc-lbl">Staff under mentorship</div><div class="mc-val">18</div><div class="mc-sub"><span class="sdot dt"></span>3 regions active</div></div>
-  </div>
-  <div class="g2">
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>KPI progress vs target</div></div>
-      <div class="card-bd">
-        <div class="leg"><span class="leg-item"><span class="leg-sq" style="background:#639922"></span>On track</span><span class="leg-item"><span class="leg-sq" style="background:#BA7517"></span>Monitor</span><span class="leg-item"><span class="leg-sq" style="background:#E24B4A"></span>At risk</span><span class="leg-item"><span class="leg-sq" style="background:#D85A30;opacity:.4"></span>Target</span></div>
-        <div class="cw" style="height:200px"><canvas id="c-kpibar" role="img" aria-label="Bar chart of 9 KPI scores vs 100% target line">KPI progress shown.</canvas></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-donut" aria-hidden="true"></i>Programme reach by region</div></div>
-      <div class="card-bd">
-        <div class="leg"><span class="leg-item"><span class="leg-sq" style="background:#0C447C"></span>HIM North</span><span class="leg-item"><span class="leg-sq" style="background:#185FA5"></span>HIM Central</span><span class="leg-item"><span class="leg-sq" style="background:#378ADD"></span>HIM South</span><span class="leg-item"><span class="leg-sq" style="background:#993C1D"></span>GESD North</span><span class="leg-item"><span class="leg-sq" style="background:#D85A30"></span>GESD Central</span><span class="leg-item"><span class="leg-sq" style="background:#F0997B"></span>GESD South</span></div>
-        <div class="cw" style="height:200px"><canvas id="c-reach" role="img" aria-label="Doughnut chart showing participant reach per programme per region">Reach data shown.</canvas></div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-alert-triangle" aria-hidden="true"></i>Priority action items</div></div>
-    <div class="card-bd">
-      <div class="action-item"><div class="ai-icon ai-amb"><i class="ti ti-activity" aria-hidden="true"></i></div><div style="flex:1"><div style="font-size:12px;font-weight:500">Session monitoring coverage below target</div><div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">Currently 68% vs ≥70% target. Increase direct monitoring visits in Southern Region districts.</div></div><span class="badge ba">Monitor</span></div>
-      <div class="action-item"><div class="ai-icon ai-amb"><i class="ti ti-user-check" aria-hidden="true"></i></div><div style="flex:1"><div style="font-size:12px;font-weight:500">4 instructors pending ETT specialist assessment</div><div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">Instructor evaluation at 91% vs ≥95% target. Schedule assessment for remaining Lilongwe and Machinga instructors.</div></div><span class="badge ba">Monitor</span></div>
-      <div class="action-item"><div class="ai-icon ai-red"><i class="ti ti-map-2" aria-hidden="true"></i></div><div style="flex:1"><div style="font-size:12px;font-weight:500">Cross-district coordination gap — Lilongwe district</div><div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">Structured coordination engagement missing this month. Action required before end of quarter.</div></div><span class="badge br">Critical</span></div>
-      <div class="action-item"><div class="ai-icon ai-grn"><i class="ti ti-file-check" aria-hidden="true"></i></div><div style="flex:1"><div style="font-size:12px;font-weight:500">All monthly reports submitted on time</div><div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">Operations Director confirmed receipt of all Q1 reports. Excellent documentation integrity across all three regions.</div></div><span class="badge bg">On track</span></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-line" aria-hidden="true"></i>KPI trend — all quarters (projected)</div></div>
-    <div class="card-bd">
-      <div class="leg"><span class="leg-item"><span class="leg-sq" style="background:#639922"></span>Curriculum compliance</span><span class="leg-item"><span class="leg-sq" style="background:#185FA5"></span>Instructor assessment</span><span class="leg-item"><span class="leg-sq" style="background:#BA7517"></span>Session monitoring</span><span class="leg-item"><span class="leg-sq" style="background:#D85A30"></span>Report timeliness</span></div>
-      <div class="cw" style="height:200px"><canvas id="c-trend" role="img" aria-label="Line chart showing four KPI trends across Q1 to Q4">Trend data shown.</canvas></div>
-    </div>
-  </div>
-</div>
-
-<!-- KPI TRACKER -->
-<div id="s-kpi" class="sec">
-  <div class="stitle">KPI performance tracker</div>
-  <div class="ssub">Enter actual values per quarter. Status and progress update automatically against contractual targets.</div>
-  <div class="card" style="margin-bottom:12px">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-list-check" aria-hidden="true"></i>9 Key Performance Indicators — Employment Contract Addendum</div><button class="savebtn" onclick="toast('KPI data saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-    <div style="overflow-x:auto">
-      <table class="tbl" style="table-layout:auto">
-        <thead><tr><th style="width:22px">#</th><th style="width:160px">KPI</th><th style="width:160px">Definition</th><th>Target</th><th>Actual</th><th style="width:100px">Progress</th><th>Status</th></tr></thead>
-        <tbody id="kpi-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-line" aria-hidden="true"></i>All-quarters KPI trend</div></div>
-    <div class="card-bd">
-      <div class="leg" id="trend-leg"></div>
-      <div class="cw" style="height:220px"><canvas id="c-kpitrendmain" role="img" aria-label="Multi-line chart showing all 9 KPI trends Q1 to Q4">KPI trend data.</canvas></div>
-    </div>
-  </div>
-</div>
-
-<!-- MENTORSHIP PLAN -->
-<div id="s-mentor" class="sec">
-  <div class="stitle">ETT mentorship workplan</div>
-  <div class="ssub">Track progress of staff being mentored. Minimum 2 structured sessions per instructor per quarter (KPI 6).</div>
-  <div class="pill-row">
-    <button class="pbtn on" onclick="mTab('him',this)">Hero In Me</button>
-    <button class="pbtn" onclick="mTab('gesd',this)">Girls Empowerment Self-Defence</button>
-  </div>
-  <div id="mp-him">
-    <div class="g3" style="margin-bottom:12px">
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#185FA5"><i class="ti ti-map-pin" aria-hidden="true"></i>Northern region</div></div><div class="card-bd" id="mn-north-him"></div></div>
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#1D9E75"><i class="ti ti-map-pin" aria-hidden="true"></i>Central region</div></div><div class="card-bd" id="mn-central-him"></div></div>
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#D85A30"><i class="ti ti-map-pin" aria-hidden="true"></i>Southern region</div></div><div class="card-bd" id="mn-south-him"></div></div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-calendar" aria-hidden="true"></i>HIM mentorship schedule — all regions</div><button class="savebtn" onclick="toast('HIM mentorship saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-      <div style="overflow-x:auto"><table class="tbl" style="table-layout:auto"><thead><tr><th>Name</th><th>Role</th><th>Region</th><th>District</th><th>Module</th><th>Session 1 /100</th><th>Session 2 /100</th><th>Notes</th><th>Overall</th></tr></thead><tbody id="ms-him"></tbody></table></div>
-    </div>
-  </div>
-  <div id="mp-gesd" style="display:none">
-    <div class="g3" style="margin-bottom:12px">
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#185FA5"><i class="ti ti-map-pin" aria-hidden="true"></i>Northern region</div></div><div class="card-bd" id="mn-north-gesd"></div></div>
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#1D9E75"><i class="ti ti-map-pin" aria-hidden="true"></i>Central region</div></div><div class="card-bd" id="mn-central-gesd"></div></div>
-      <div class="card"><div class="card-hd"><div class="card-hd-t" style="color:#D85A30"><i class="ti ti-map-pin" aria-hidden="true"></i>Southern region</div></div><div class="card-bd" id="mn-south-gesd"></div></div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-calendar" aria-hidden="true"></i>GESD mentorship schedule — all regions</div><button class="savebtn" onclick="toast('GESD mentorship saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-      <div style="overflow-x:auto"><table class="tbl" style="table-layout:auto"><thead><tr><th>Name</th><th>Role</th><th>Region</th><th>District</th><th>Module</th><th>Session 1 /100</th><th>Session 2 /100</th><th>Notes</th><th>Overall</th></tr></thead><tbody id="ms-gesd"></tbody></table></div>
-    </div>
-  </div>
-</div>
-
-<!-- ETT SESSIONS -->
-<div id="s-sessions" class="sec">
-  <div class="stitle">ETT sessions monitoring tool</div>
-  <div class="ssub">Monitor Senior TOTs, TOTs and PEAs executing their roles across all Ujamaa Pamodzi districts in Northern, Central and Southern regions.</div>
-  <div class="pill-row">
-    <button class="pbtn on" onclick="rTab('stot',this)"><i class="ti ti-star" aria-hidden="true"></i>Senior TOTs</button>
-    <button class="pbtn" onclick="rTab('tot',this)"><i class="ti ti-users" aria-hidden="true"></i>TOTs</button>
-    <button class="pbtn" onclick="rTab('pea',this)"><i class="ti ti-id-badge" aria-hidden="true"></i>PEAs</button>
-  </div>
-
-  <div id="rp-stot">
-    <div class="mgrid" style="margin-bottom:12px" id="stot-metrics"></div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-star" aria-hidden="true"></i>Senior TOT monitoring — all regions & districts</div><button class="savebtn" onclick="toast('Senior TOT data saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-      <div style="overflow-x:auto"><table class="tbl" style="table-layout:auto"><thead><tr><th>Name</th><th>District</th><th>Region</th><th>Programme</th><th>Planned</th><th>Conducted</th><th>Score /100</th><th>Delivery quality</th><th>Curriculum prep</th><th>Monitoring coverage</th><th>Overall</th></tr></thead><tbody id="tbl-stot"></tbody></table></div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>Senior TOT performance — by district</div></div>
-      <div class="card-bd"><div class="cw" style="height:200px"><canvas id="c-stot" role="img" aria-label="Bar chart of Senior TOT performance scores per district">Senior TOT scores shown.</canvas></div></div>
-    </div>
-  </div>
-
-  <div id="rp-tot" style="display:none">
-    <div class="mgrid" style="margin-bottom:12px" id="tot-metrics"></div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-users" aria-hidden="true"></i>TOT monitoring — all regions & districts</div><button class="savebtn" onclick="toast('TOT data saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-      <div style="overflow-x:auto"><table class="tbl" style="table-layout:auto"><thead><tr><th>Name</th><th>District</th><th>Region</th><th>Programme</th><th>Planned</th><th>Conducted</th><th>Score /100</th><th>Delivery quality</th><th>Curriculum prep</th><th>Monitoring coverage</th><th>Overall</th></tr></thead><tbody id="tbl-tot"></tbody></table></div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>TOT performance — by district</div></div>
-      <div class="card-bd"><div class="cw" style="height:200px"><canvas id="c-tot" role="img" aria-label="Bar chart of TOT performance scores per district">TOT scores shown.</canvas></div></div>
-    </div>
-  </div>
-
-  <div id="rp-pea" style="display:none">
-    <div class="mgrid" style="margin-bottom:12px" id="pea-metrics"></div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-id-badge" aria-hidden="true"></i>PEA monitoring — all regions & districts</div><button class="savebtn" onclick="toast('PEA data saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-      <div style="overflow-x:auto"><table class="tbl" style="table-layout:auto"><thead><tr><th>Name</th><th>District</th><th>Region</th><th>Programme</th><th>Planned</th><th>Conducted</th><th>Score /100</th><th>Delivery quality</th><th>Curriculum prep</th><th>Monitoring coverage</th><th>Overall</th></tr></thead><tbody id="tbl-pea"></tbody></table></div>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>PEA performance — by district</div></div>
-      <div class="card-bd"><div class="cw" style="height:200px"><canvas id="c-pea" role="img" aria-label="Bar chart of PEA performance scores per district">PEA scores shown.</canvas></div></div>
-    </div>
-  </div>
-</div>
-
-<!-- QA COMPLIANCE -->
-<div id="s-qa" class="sec">
-  <div class="stitle">Quality assurance compliance programme</div>
-  <div class="ssub">Real-time tracking of all 9 contractual KPI deliverables with on-track / monitor / at-risk indicators. Update actuals each quarter.</div>
-  <div class="mgrid">
-    <div class="mc"><div class="mc-lbl">Overall compliance</div><div class="mc-val" style="color:#639922">88%</div><div class="mc-sub">All QA domains</div></div>
-    <div class="mc"><div class="mc-lbl">On track</div><div class="mc-val" style="color:#639922">5</div><div class="mc-sub">of 9 indicators</div></div>
-    <div class="mc"><div class="mc-lbl">Monitor</div><div class="mc-val" style="color:#BA7517">4</div><div class="mc-sub">Need attention</div></div>
-    <div class="mc"><div class="mc-lbl">Critical / at risk</div><div class="mc-val" style="color:#E24B4A">0</div><div class="mc-sub">Immediate action</div></div>
-  </div>
-  <div class="card" style="margin-bottom:12px">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-clipboard-list" aria-hidden="true"></i>QA compliance checklist — contract deliverables</div><button class="savebtn" onclick="toast('QA compliance saved')"><i class="ti ti-device-floppy" aria-hidden="true"></i>Save</button></div>
-    <div class="card-bd" id="qa-list"></div>
-  </div>
-  <div class="g2">
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-radar" aria-hidden="true"></i>QA compliance radar</div></div>
-      <div class="card-bd"><div class="cw" style="height:240px"><canvas id="c-radar" role="img" aria-label="Radar chart of QA compliance across 9 domains">Radar data shown.</canvas></div></div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>Compliance by programme</div></div>
-      <div class="card-bd">
-        <div class="leg" style="margin-bottom:8px"><span class="leg-item"><span class="leg-sq" style="background:#185FA5"></span>HIM</span><span class="leg-item"><span class="leg-sq" style="background:#D85A30"></span>GESD</span></div>
-        <div class="cw" style="height:220px"><canvas id="c-prog-comply" role="img" aria-label="Grouped bar chart comparing HIM vs GESD compliance">Programme compliance.</canvas></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- REGIONAL VIEW -->
-<div id="s-regional" class="sec">
-  <div class="stitle">Regional performance dashboard</div>
-  <div class="ssub">District-level performance breakdown across all three Ujamaa operational regions.</div>
-  <div class="g3" style="margin-bottom:12px">
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t" style="color:#185FA5"><i class="ti ti-map-2" aria-hidden="true"></i>Northern region</div></div>
-      <div class="card-bd">
-        <div class="rhdr">Districts: Mzimba · Rumphi · Chitipa · Karonga</div>
-        <div id="r-north"></div>
-        <div class="divider"></div>
-        <div style="font-size:10px;color:var(--color-text-secondary)">Senior TOTs: 2 &nbsp;|&nbsp; TOTs: 2 &nbsp;|&nbsp; PEAs: 1</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t" style="color:#1D9E75"><i class="ti ti-map-2" aria-hidden="true"></i>Central region</div></div>
-      <div class="card-bd">
-        <div class="rhdr">Districts: Lilongwe · Dowa · Kasungu · Mchinji</div>
-        <div id="r-central"></div>
-        <div class="divider"></div>
-        <div style="font-size:10px;color:var(--color-text-secondary)">Senior TOTs: 2 &nbsp;|&nbsp; TOTs: 2 &nbsp;|&nbsp; PEAs: 2</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-hd"><div class="card-hd-t" style="color:#D85A30"><i class="ti ti-map-2" aria-hidden="true"></i>Southern region</div></div>
-      <div class="card-bd">
-        <div class="rhdr">Districts: Blantyre · Zomba · Machinga · Mangochi</div>
-        <div id="r-south"></div>
-        <div class="divider"></div>
-        <div style="font-size:10px;color:var(--color-text-secondary)">Senior TOTs: 2 &nbsp;|&nbsp; TOTs: 2 &nbsp;|&nbsp; PEAs: 1</div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>District-level performance comparison — all 12 districts</div></div>
-    <div class="card-bd">
-      <div class="leg"><span class="leg-item"><span class="leg-sq" style="background:#0C447C"></span>Northern</span><span class="leg-item"><span class="leg-sq" style="background:#085041"></span>Central</span><span class="leg-item"><span class="leg-sq" style="background:#712B13"></span>Southern</span></div>
-      <div class="cw" style="height:240px"><canvas id="c-district" role="img" aria-label="Bar chart of performance scores for all 12 Ujamaa districts">District scores shown.</canvas></div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:0">
-    <div class="card-hd"><div class="card-hd-t"><i class="ti ti-chart-bar" aria-hidden="true"></i>Regional comparison — HIM vs GESD sessions conducted</div></div>
-    <div class="card-bd">
-      <div class="leg"><span class="leg-item"><span class="leg-sq" style="background:#185FA5"></span>Hero In Me</span><span class="leg-item"><span class="leg-sq" style="background:#D85A30"></span>GESD</span></div>
-      <div class="cw" style="height:200px"><canvas id="c-regcomp" role="img" aria-label="Grouped bar chart comparing HIM and GESD session counts by region">Regional comparison shown.</canvas></div>
-    </div>
-  </div>
-</div>
-
-<div class="toast-wrap"><div id="toast-el" class="toast"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-msg">Saved</span></div></div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-const KPIS=[
-  {id:1,name:'Culturally responsive curriculum compliance',def:'All materials validated for cultural sensitivity prior to use',target:95,actual:97,unit:'%'},
-  {id:2,name:'Curriculum adaptation & customisation rate',def:'Champion teachers supported to adapt curriculum locally',target:90,actual:85,unit:'%'},
-  {id:3,name:'Instructor evaluation score',def:'Instructors assessed as competent ETT specialists',target:95,actual:91,unit:'%'},
-  {id:4,name:'Curriculum delivery monitoring coverage',def:'Proportion of sessions monitored for QA',target:70,actual:68,unit:'%'},
-  {id:5,name:'QA compliance rate',def:'Implementation adherence to established QA frameworks',target:95,actual:93,unit:'%'},
-  {id:6,name:'Mentorship & feedback completion rate',def:'Structured mentorship sessions per instructor per quarter',target:2,actual:2,unit:'sessions'},
-  {id:7,name:'Timeliness of report submission',def:'Monthly reports to Operations Director within deadline',target:100,actual:100,unit:'%'},
-  {id:8,name:'Data accuracy & documentation integrity',def:'Error-free lesson plans, attendance records & QA tools',target:98,actual:99,unit:'%'},
-  {id:9,name:'Cross-district coordination effectiveness',def:'Structured coordination engagements per district per month',target:1,actual:0.7,unit:'sessions'},
-];
-
-const STOTS=[
-  {name:'Charles Banda',district:'Mzimba',region:'Northern',prog:'HIM',planned:12,conducted:11,score:87,quality:'Proficient',prep:'Good',mcover:'70%'},
-  {name:'Esther Nkhoma',district:'Karonga',region:'Northern',prog:'GESD',planned:12,conducted:12,score:92,quality:'Excellent',prep:'Excellent',mcover:'85%'},
-  {name:'Joseph Phiri',district:'Lilongwe',region:'Central',prog:'HIM',planned:12,conducted:9,score:72,quality:'Developing',prep:'Adequate',mcover:'55%'},
-  {name:'Miriam Mbewe',district:'Kasungu',region:'Central',prog:'GESD',planned:12,conducted:11,score:89,quality:'Proficient',prep:'Good',mcover:'78%'},
-  {name:'Mercy Chirwa',district:'Blantyre',region:'Southern',prog:'HIM',planned:12,conducted:12,score:95,quality:'Excellent',prep:'Excellent',mcover:'92%'},
-  {name:'Joyce Nyirenda',district:'Zomba',region:'Southern',prog:'GESD',planned:12,conducted:11,score:86,quality:'Proficient',prep:'Good',mcover:'75%'},
-];
-const TOTS=[
-  {name:'Faith Mwale',district:'Rumphi',region:'Northern',prog:'HIM',planned:10,conducted:9,score:88,quality:'Proficient',prep:'Good',mcover:'72%'},
-  {name:'Tamara Phiri',district:'Chitipa',region:'Northern',prog:'GESD',planned:10,conducted:9,score:83,quality:'Proficient',prep:'Good',mcover:'68%'},
-  {name:'Grace Tembo',district:'Dowa',region:'Central',prog:'HIM',planned:10,conducted:10,score:91,quality:'Excellent',prep:'Excellent',mcover:'80%'},
-  {name:'Patricia Msusa',district:'Mchinji',region:'Central',prog:'GESD',planned:10,conducted:8,score:76,quality:'Developing',prep:'Adequate',mcover:'60%'},
-  {name:'David Kalua',district:'Machinga',region:'Southern',prog:'HIM',planned:10,conducted:9,score:81,quality:'Proficient',prep:'Good',mcover:'70%'},
-  {name:'Stella Munthali',district:'Mangochi',region:'Southern',prog:'GESD',planned:10,conducted:9,score:85,quality:'Proficient',prep:'Good',mcover:'73%'},
-];
-const PEAS=[
-  {name:'Peter Mwanza',district:'Mzimba',region:'Northern',prog:'HIM',planned:8,conducted:7,score:79,quality:'Proficient',prep:'Adequate',mcover:'65%'},
-  {name:'Isaac Banda',district:'Kasungu',region:'Central',prog:'HIM',planned:8,conducted:6,score:68,quality:'Developing',prep:'Needs support',mcover:'50%'},
-  {name:'Anna Gondwe',district:'Lilongwe',region:'Central',prog:'GESD',planned:8,conducted:8,score:85,quality:'Proficient',prep:'Good',mcover:'72%'},
-  {name:'Ruth Manda',district:'Zomba',region:'Southern',prog:'GESD',planned:8,conducted:6,score:72,quality:'Developing',prep:'Adequate',mcover:'55%'},
-];
-
-const HIM_STAFF={
-  north:[{name:'Charles Banda',role:'Senior TOT',av:'at',init:'CB',district:'Mzimba',module:'Identity & Masculinity',s1:87,s2:85},{name:'Faith Mwale',role:'TOT',av:'ab',init:'FM',district:'Rumphi',module:'Positive Role Models',s1:88,s2:90}],
-  central:[{name:'Joseph Phiri',role:'Senior TOT',av:'at',init:'JP',district:'Lilongwe',module:'Healthy Relationships',s1:72,s2:76},{name:'Grace Tembo',role:'TOT',av:'ab',init:'GT',district:'Dowa',module:'Identity & Masculinity',s1:91,s2:89},{name:'Isaac Banda',role:'PEA',av:'ap',init:'IB',district:'Kasungu',module:'Community Engagement',s1:65,s2:70}],
-  south:[{name:'Mercy Chirwa',role:'Senior TOT',av:'at',init:'MC',district:'Blantyre',module:'Positive Behaviour Change',s1:95,s2:94},{name:'David Kalua',role:'TOT',av:'ab',init:'DK',district:'Machinga',module:'Healthy Relationships',s1:81,s2:83}]
-};
-const GESD_STAFF={
-  north:[{name:'Esther Nkhoma',role:'Senior TOT',av:'ao',init:'EN',district:'Karonga',module:'Safety & Boundaries',s1:92,s2:90},{name:'Tamara Phiri',role:'TOT',av:'ap',init:'TP',district:'Chitipa',module:'Self-Defence Basics',s1:83,s2:85}],
-  central:[{name:'Miriam Mbewe',role:'Senior TOT',av:'ao',init:'MM',district:'Kasungu',module:'Empowerment & Confidence',s1:89,s2:91},{name:'Patricia Msusa',role:'TOT',av:'ap',init:'PM',district:'Mchinji',module:'Safety & Boundaries',s1:76,s2:78},{name:'Anna Gondwe',role:'PEA',av:'ag',init:'AG',district:'Lilongwe',module:'Community Mobilisation',s1:85,s2:82}],
-  south:[{name:'Joyce Nyirenda',role:'Senior TOT',av:'ao',init:'JN',district:'Zomba',module:'Self-Defence Fundamentals',s1:86,s2:88},{name:'Stella Munthali',role:'TOT',av:'ap',init:'SM',district:'Mangochi',module:'Empowerment & Confidence',s1:85,s2:87},{name:'Ruth Manda',role:'PEA',av:'ag',init:'RM',district:'Zomba',module:'Community Mobilisation',s1:72,s2:74}]
-};
-
-const QA_ITEMS=[
-  {name:'Culturally responsive curriculum validation',ref:'KPI 1',target:'≥95% materials validated',actual:97,status:'on'},
-  {name:'Champion teacher engagement rate',ref:'KPI 2',target:'≥90% engaged per quarter',actual:85,status:'mon'},
-  {name:'Instructor ETT competency assessment',ref:'KPI 3 & 5',target:'≥95% assessed as ETT specialists',actual:91,status:'mon'},
-  {name:'Session monitoring coverage',ref:'KPI 4',target:'≥70% of sessions monitored',actual:68,status:'mon'},
-  {name:'QA framework adherence',ref:'KPI 5',target:'≥95% compliance with QA standards',actual:93,status:'mon'},
-  {name:'Mentorship sessions delivered',ref:'KPI 6',target:'Min 2 sessions/instructor/quarter',actual:100,status:'on'},
-  {name:'Report submission timeliness',ref:'KPI 7',target:'100% submitted on time',actual:100,status:'on'},
-  {name:'Documentation accuracy & integrity',ref:'KPI 8',target:'≥98% error-free documentation',actual:99,status:'on'},
-  {name:'Cross-district coordination engagements',ref:'KPI 9',target:'1 structured engagement/district/month',actual:70,status:'mon'},
-];
-
-const REGION_DATA={
-  north:[{d:'Mzimba',sc:87},{d:'Rumphi',sc:83},{d:'Chitipa',sc:79},{d:'Karonga',sc:91}],
-  central:[{d:'Lilongwe',sc:72},{d:'Dowa',sc:90},{d:'Kasungu',sc:85},{d:'Mchinji',sc:78}],
-  south:[{d:'Blantyre',sc:95},{d:'Zomba',sc:86},{d:'Machinga',sc:81},{d:'Mangochi',sc:85}]
-};
-
-function stColor(sc){return sc>=85?'#639922':sc>=70?'#BA7517':'#E24B4A'}
-function stBadge(sc){return sc>=85?'bg':sc>=70?'ba':'br'}
-function stLabel(sc){return sc>=85?'On track':sc>=70?'Monitor':'At risk'}
-function pct(a,t){return Math.min(100,Math.round((a/t)*100))}
-
-function buildKPI(){
-  const tb=document.getElementById('kpi-tbody');
-  tb.innerHTML='';
-  KPIS.forEach((k,i)=>{
-    const p=pct(k.actual,k.target);
-    const sc=k.unit==='%'?k.actual:(k.actual/k.target)*100;
-    const bc=sc>=95?'bgreen':sc>=80?'bamber':'bred';
-    const badge=sc>=95?'bg':sc>=80?'ba':'br';
-    const lbl=sc>=95?'On track':sc>=80?'Monitor':'At risk';
-    tb.innerHTML+=`<tr>
-      <td style="color:var(--color-text-secondary);font-size:10px">${k.id}</td>
-      <td><div style="font-size:11px;font-weight:500">${k.name}</div></td>
-      <td style="font-size:10px;color:var(--color-text-secondary)">${k.def}</td>
-      <td style="font-size:11px">${k.target} ${k.unit}</td>
-      <td><input class="ipt" type="number" value="${k.actual}" onchange="updateKPI(${i},this.value)" /></td>
-      <td><div style="display:flex;align-items:center;gap:5px"><div class="mbar-w"><div class="mbar ${bc}" id="kb-${i}" style="width:${p}%"></div></div><span style="font-size:10px;font-weight:500;min-width:28px" id="kp-${i}">${p}%</span></div></td>
-      <td><span class="badge ${badge}" id="ks-${i}">${lbl}</span></td>
-    </tr>`;
-  });
-}
-
-function updateKPI(i,v){
-  KPIS[i].actual=parseFloat(v)||0;
-  const p=pct(KPIS[i].actual,KPIS[i].target);
-  const sc=KPIS[i].unit==='%'?KPIS[i].actual:(KPIS[i].actual/KPIS[i].target)*100;
-  const bc=sc>=95?'bgreen':sc>=80?'bamber':'bred';
-  const badge=sc>=95?'bg':sc>=80?'ba':'br';
-  const lbl=sc>=95?'On track':sc>=80?'Monitor':'At risk';
-  const b=document.getElementById('kb-'+i);
-  b.className='mbar '+bc; b.style.width=p+'%';
-  document.getElementById('kp-'+i).textContent=p+'%';
-  const s=document.getElementById('ks-'+i);
-  s.className='badge '+badge; s.textContent=lbl;
-}
-
-function buildMentorCards(containerId,staff){
-  const el=document.getElementById(containerId);
-  if(!el)return;
-  el.innerHTML='';
-  staff.forEach(s=>{
-    const avg=Math.round((s.s1+s.s2)/2);
-    const bc=avg>=85?'bgreen':avg>=70?'bamber':'bred';
-    const vc=stColor(avg);
-    el.innerHTML+=`<div class="prow">
-      <div class="av ${s.av}">${s.init}</div>
-      <div class="pi">
-        <div class="pn">${s.name}</div>
-        <div class="pr">${s.role} · ${s.district}</div>
-        <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
-          <div class="mbar-w"><div class="mbar ${bc}" style="width:${avg}%"></div></div>
-          <span class="mval" style="color:${vc}">${avg}%</span>
-        </div>
-      </div>
-    </div>`;
-  });
-}
-
-function buildMentorTable(tbodyId,staffList){
-  const tb=document.getElementById(tbodyId);
-  if(!tb)return;
-  staffList.forEach(s=>{
-    const avg=Math.round((s.s1+s.s2)/2);
-    const badge=stBadge(avg); const lbl=stLabel(avg);
-    tb.innerHTML+=`<tr>
-      <td style="font-weight:500;font-size:11px">${s.name}</td>
-      <td><span class="badge ${s.role.includes('Senior')?'bt':s.role==='PEA'?'bp':'bb'}">${s.role}</span></td>
-      <td>${s.region||''}</td>
-      <td>${s.district}</td>
-      <td style="font-size:10px">${s.module}</td>
-      <td><input class="ipt" type="number" value="${s.s1}" min="0" max="100" /></td>
-      <td><input class="ipt" type="number" value="${s.s2}" min="0" max="100" /></td>
-      <td><input class="ipt ipt-w" type="text" value="On schedule" /></td>
-      <td><span class="badge ${badge}">${avg}%</span></td>
-    </tr>`;
-  });
-}
-
-function buildSessionTable(tbodyId,data){
-  const tb=document.getElementById(tbodyId);
-  if(!tb)return;
-  tb.innerHTML='';
-  data.forEach(d=>{
-    const pPct=Math.round((d.conducted/d.planned)*100);
-    const progBadge=d.prog==='HIM'?'bb':'bo';
-    const oBadge=d.quality==='Excellent'?'bg':d.quality==='Proficient'?'bt':'ba';
-    const sc=d.score;
-    const sBadge=sc>=85?'bg':sc>=70?'ba':'br';
-    const ovPct=Math.round((sc+pPct)/2);
-    const ovBadge=stBadge(ovPct);
-    tb.innerHTML+=`<tr>
-      <td style="font-weight:500;font-size:11px">${d.name}</td>
-      <td>${d.district}</td>
-      <td>${d.region}</td>
-      <td><span class="badge ${progBadge}">${d.prog}</span></td>
-      <td style="text-align:center"><input class="ipt" type="number" value="${d.planned}" /></td>
-      <td style="text-align:center"><input class="ipt" type="number" value="${d.conducted}" /></td>
-      <td><span class="badge ${sBadge}">${d.score}</span></td>
-      <td><select class="sel"><option ${d.quality==='Excellent'?'selected':''}>Excellent</option><option ${d.quality==='Proficient'?'selected':''}>Proficient</option><option ${d.quality==='Developing'?'selected':''}>Developing</option><option>Needs support</option></select></td>
-      <td><select class="sel"><option ${d.prep==='Excellent'?'selected':''}>Excellent</option><option ${d.prep==='Good'?'selected':''}>Good</option><option ${d.prep==='Adequate'?'selected':''}>Adequate</option><option ${d.prep==='Needs support'?'selected':''}>Needs support</option></select></td>
-      <td>${d.mcover}</td>
-      <td><span class="badge ${ovBadge}">${ovPct}%</span></td>
-    </tr>`;
-  });
-}
-
-function buildRoleMetrics(id,data){
-  const el=document.getElementById(id);
-  if(!el)return;
-  const avg=Math.round(data.reduce((a,d)=>a+d.score,0)/data.length);
-  const conducted=data.reduce((a,d)=>a+d.conducted,0);
-  const planned=data.reduce((a,d)=>a+d.planned,0);
-  el.innerHTML=`
-    <div class="mc"><div class="mc-lbl">Avg monitoring score</div><div class="mc-val" style="color:${stColor(avg)}">${avg}</div><div class="mc-sub">out of 100</div></div>
-    <div class="mc"><div class="mc-lbl">Sessions conducted</div><div class="mc-val">${conducted}/${planned}</div><div class="mc-sub">${Math.round((conducted/planned)*100)}% completion</div></div>
-    <div class="mc"><div class="mc-lbl">Excellent delivery</div><div class="mc-val">${data.filter(d=>d.quality==='Excellent').length}</div><div class="mc-sub">of ${data.length} staff</div></div>
-    <div class="mc"><div class="mc-lbl">Needs development</div><div class="mc-val">${data.filter(d=>d.quality==='Developing'||d.quality==='Needs support').length}</div><div class="mc-sub">require coaching</div></div>
-  `;
-}
-
-function buildQAList(){
-  const el=document.getElementById('qa-list');
-  el.innerHTML='';
-  QA_ITEMS.forEach((item,i)=>{
-    const chipCls=item.status==='on'?'chip-g':'chip-a';
-    const chipLbl=item.status==='on'?'On track':'Monitor';
-    const chipIcon=item.status==='on'?'ti-circle-check':'ti-alert-circle';
-    const barCls=item.status==='on'?'bgreen':'bamber';
-    const p=Math.min(100,item.actual);
-    el.innerHTML+=`<div class="qa-row">
-      <div class="qa-left">
-        <div class="qa-name">${item.name}</div>
-        <div class="qa-ref">${item.ref} — Target: ${item.target}</div>
-      </div>
-      <div class="qa-right">
-        <div style="display:flex;align-items:center;gap:6px;width:130px">
-          <div class="mbar-w"><div class="mbar ${barCls}" id="qa-bar-${i}" style="width:${p}%"></div></div>
-          <input class="ipt" type="number" value="${item.actual}" style="width:44px" onchange="updateQA(${i},this.value)" />
-        </div>
-        <span class="chip ${chipCls}" id="qa-chip-${i}"><i class="ti ${chipIcon}" aria-hidden="true"></i>${chipLbl}</span>
-      </div>
-    </div>`;
-  });
-}
-
-function updateQA(i,v){
-  QA_ITEMS[i].actual=parseFloat(v)||0;
-  const p=Math.min(100,QA_ITEMS[i].actual);
-  document.getElementById('qa-bar-'+i).style.width=p+'%';
-}
-
-function buildRegionStats(){
-  ['north','central','south'].forEach(r=>{
-    const el=document.getElementById('r-'+r);
-    if(!el)return;
-    el.innerHTML='';
-    REGION_DATA[r].forEach(d=>{
-      const vc=stColor(d.sc);
-      const bc=d.sc>=85?'bgreen':d.sc>=70?'bamber':'bred';
-      el.innerHTML+=`<div class="prow">
-        <div style="flex:1">
-          <div style="font-size:11px;font-weight:500">${d.d}</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
-            <div class="mbar-w"><div class="mbar ${bc}" style="width:${d.sc}%"></div></div>
-            <span style="font-size:10px;font-weight:500;color:${vc}">${d.sc}%</span>
-          </div>
-        </div>
-        <span class="badge ${stBadge(d.sc)}">${stLabel(d.sc)}</span>
-      </div>`;
-    });
-  });
-}
-
-function nav(id,tab){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('s-'+id).classList.add('on');
-  tab.classList.add('on');
-}
-
-function mTab(id,btn){
-  ['him','gesd'].forEach(x=>document.getElementById('mp-'+x).style.display='none');
-  btn.closest('.pill-row').querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('mp-'+id).style.display='';
-  btn.classList.add('on');
-}
-
-function rTab(id,btn){
-  ['stot','tot','pea'].forEach(x=>document.getElementById('rp-'+x).style.display='none');
-  btn.closest('.pill-row').querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('rp-'+id).style.display='';
-  btn.classList.add('on');
-}
-
-function setQ(btn,q){
-  document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('qlabel').textContent='2025 · '+q;
-  document.getElementById('ov-qlabel').textContent=q+' 2025';
-  toast('Switched to '+q+' 2025');
-}
-
-function toast(msg){
-  const t=document.getElementById('toast-el');
-  document.getElementById('toast-msg').textContent=msg;
-  t.style.display='flex';
-  setTimeout(()=>t.style.display='none',2500);
-}
-
-function initCharts(){
-  const dark=matchMedia('(prefers-color-scheme: dark)').matches;
-  const tc=dark?'#888':'#666';
-  const gc=dark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.06)';
-
-  new Chart(document.getElementById('c-kpibar'),{type:'bar',
-    data:{labels:KPIS.map((_,i)=>'KPI '+(i+1)),datasets:[
-      {label:'Score',data:KPIS.map(k=>Math.min(100,Math.round((k.actual/k.target)*100))),backgroundColor:KPIS.map(k=>{const p=(k.actual/k.target)*100;return p>=95?'#639922':p>=80?'#BA7517':'#E24B4A'}),borderWidth:0},
-      {label:'Target',data:Array(9).fill(100),type:'line',borderColor:'#D85A30',borderDash:[4,3],pointRadius:0,borderWidth:1.5,fill:false}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{max:110,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10}},grid:{display:false}}}}
-  });
-
-  new Chart(document.getElementById('c-reach'),{type:'doughnut',
-    data:{labels:['HIM North','HIM Central','HIM South','GESD North','GESD Central','GESD South'],datasets:[{data:[18,24,20,16,22,19],backgroundColor:['#0C447C','#185FA5','#378ADD','#993C1D','#D85A30','#F0997B'],borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'58%'}
-  });
-
-  new Chart(document.getElementById('c-trend'),{type:'line',
-    data:{labels:['Q1','Q2','Q3','Q4'],datasets:[
-      {label:'Curriculum compliance',data:[97,95,96,98],borderColor:'#639922',tension:0.4,pointRadius:4,borderWidth:2,fill:false,borderDash:[]},
-      {label:'Instructor assessment',data:[91,93,95,96],borderColor:'#185FA5',tension:0.4,borderDash:[6,3],pointRadius:4,borderWidth:2,fill:false},
-      {label:'Session monitoring',data:[68,72,75,80],borderColor:'#BA7517',tension:0.4,borderDash:[3,3],pointRadius:4,borderWidth:2,fill:false},
-      {label:'Report timeliness',data:[100,100,100,100],borderColor:'#D85A30',tension:0.4,pointRadius:4,borderWidth:2,fill:false},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:60,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc},grid:{display:false}}}}
-  });
-
-  new Chart(document.getElementById('c-kpitrendmain'),{type:'line',
-    data:{labels:['Q1','Q2','Q3','Q4'],datasets:[
-      {label:'KPI 1 Curriculum compliance',data:[97,95,96,98],borderColor:'#639922',tension:0.4,pointRadius:3,borderWidth:2,fill:false},
-      {label:'KPI 2 Adaptation rate',data:[85,87,90,92],borderColor:'#0C447C',tension:0.4,borderDash:[5,3],pointRadius:3,borderWidth:2,fill:false},
-      {label:'KPI 3 Instructor eval',data:[91,93,95,96],borderColor:'#185FA5',tension:0.4,borderDash:[3,3],pointRadius:3,borderWidth:2,fill:false},
-      {label:'KPI 4 Session monitoring',data:[68,72,75,80],borderColor:'#BA7517',tension:0.4,pointRadius:3,borderWidth:2,fill:false},
-      {label:'KPI 7 Report timeliness',data:[100,100,100,100],borderColor:'#D85A30',tension:0.4,borderDash:[6,3],pointRadius:3,borderWidth:2,fill:false},
-      {label:'KPI 8 Data accuracy',data:[99,99,100,100],borderColor:'#1D9E75',tension:0.4,borderDash:[3,3],pointRadius:3,borderWidth:2,fill:false},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:60,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc},grid:{display:false}}}}
-  });
-
-  const stotD=STOTS.map(d=>d.score);
-  new Chart(document.getElementById('c-stot'),{type:'bar',
-    data:{labels:STOTS.map(d=>d.district),datasets:[{data:stotD,backgroundColor:stotD.map(s=>s>=85?'#639922':s>=70?'#BA7517':'#E24B4A'),borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10},maxRotation:30,autoSkip:false},grid:{display:false}}}}
-  });
-  const totD=TOTS.map(d=>d.score);
-  new Chart(document.getElementById('c-tot'),{type:'bar',
-    data:{labels:TOTS.map(d=>d.district),datasets:[{data:totD,backgroundColor:totD.map(s=>s>=85?'#639922':s>=70?'#BA7517':'#E24B4A'),borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10},maxRotation:30,autoSkip:false},grid:{display:false}}}}
-  });
-  const peaD=PEAS.map(d=>d.score);
-  new Chart(document.getElementById('c-pea'),{type:'bar',
-    data:{labels:PEAS.map(d=>d.district),datasets:[{data:peaD,backgroundColor:peaD.map(s=>s>=85?'#639922':s>=70?'#BA7517':'#E24B4A'),borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10},maxRotation:30,autoSkip:false},grid:{display:false}}}}
-  });
-
-  new Chart(document.getElementById('c-radar'),{type:'radar',
-    data:{labels:['Curriculum\nvalidation','Teacher\nengagement','Instructor\neval','Session\nmonitoring','QA\ncompliance','Mentorship','Report\ntimeliness','Data\naccuracy','District\ncoord'],
-      datasets:[
-        {label:'Q1 2025',data:[97,85,91,68,93,100,100,99,70],borderColor:'#D85A30',backgroundColor:'rgba(216,90,48,0.1)',pointBackgroundColor:'#D85A30',borderWidth:2},
-        {label:'Target',data:[95,90,95,70,95,100,100,98,100],borderColor:'#639922',backgroundColor:'rgba(99,153,34,0.05)',pointBackgroundColor:'#639922',borderWidth:1.5,borderDash:[4,3]},
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:50,max:105,ticks:{color:tc,font:{size:9},stepSize:10},grid:{color:gc},pointLabels:{color:tc,font:{size:9}}}}}
-  });
-
-  new Chart(document.getElementById('c-prog-comply'),{type:'bar',
-    data:{labels:['Curriculum','Engagement','Eval','Monitoring','QA','Mentorship','Reports','Docs','Coord'],
-      datasets:[
-        {label:'HIM',data:[98,86,92,70,94,100,100,99,72],backgroundColor:'#185FA5',barPercentage:0.45},
-        {label:'GESD',data:[96,84,90,66,92,100,100,99,68],backgroundColor:'#D85A30',barPercentage:0.45}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:110,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10},maxRotation:30,autoSkip:false},grid:{display:false}}}}
-  });
-
-  const allD=[...REGION_DATA.north,...REGION_DATA.central,...REGION_DATA.south];
-  const allColors=[...REGION_DATA.north.map(()=>'#0C447C'),...REGION_DATA.central.map(()=>'#085041'),...REGION_DATA.south.map(()=>'#712B13')];
-  new Chart(document.getElementById('c-district'),{type:'bar',
-    data:{labels:allD.map(d=>d.d),datasets:[{data:allD.map(d=>d.sc),backgroundColor:allColors,borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:105,ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc,font:{size:10},maxRotation:35,autoSkip:false},grid:{display:false}}}}
-  });
-
-  new Chart(document.getElementById('c-regcomp'),{type:'bar',
-    data:{labels:['Northern','Central','Southern'],
-      datasets:[
-        {label:'Hero In Me',data:[20,19,21],backgroundColor:'#185FA5',barPercentage:0.45},
-        {label:'GESD',data:[21,19,20],backgroundColor:'#D85A30',barPercentage:0.45}
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{color:tc,font:{size:10}},grid:{color:gc}},x:{ticks:{color:tc},grid:{display:false}}}}
-  });
-}
-
-buildKPI();
-buildMentorCards('mn-north-him',HIM_STAFF.north);
-buildMentorCards('mn-central-him',HIM_STAFF.central);
-buildMentorCards('mn-south-him',HIM_STAFF.south);
-buildMentorCards('mn-north-gesd',GESD_STAFF.north);
-buildMentorCards('mn-central-gesd',GESD_STAFF.central);
-buildMentorCards('mn-south-gesd',GESD_STAFF.south);
-
-const himAll=[...HIM_STAFF.north.map(s=>({...s,region:'Northern'})),...HIM_STAFF.central.map(s=>({...s,region:'Central'})),...HIM_STAFF.south.map(s=>({...s,region:'Southern'}))];
-const gesdAll=[...GESD_STAFF.north.map(s=>({...s,region:'Northern'})),...GESD_STAFF.central.map(s=>({...s,region:'Central'})),...GESD_STAFF.south.map(s=>({...s,region:'Southern'}))];
-buildMentorTable('ms-him',himAll);
-buildMentorTable('ms-gesd',gesdAll);
-
-buildSessionTable('tbl-stot',STOTS);
-buildSessionTable('tbl-tot',TOTS);
-buildSessionTable('tbl-pea',PEAS);
-buildRoleMetrics('stot-metrics',STOTS);
-buildRoleMetrics('tot-metrics',TOTS);
-buildRoleMetrics('pea-metrics',PEAS);
-buildQAList();
-buildRegionStats();
-setTimeout(initCharts,120);
-</script>
